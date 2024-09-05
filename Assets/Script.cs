@@ -1,47 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
 public class Script : MonoBehaviour
 {
     public GameObject obj;
-    private Light myLight;
 
-    private int NumEnemies = 10;
 
-    private void Start()
+    void Start()
     {
-        myLight = GetComponent<Light>();
-
-        for (int i = 0; i < NumEnemies; i++)
-            Debug.Log("Nike Pro " + i + " enemies");
+        Invoke("Inst", 2f);
     }
 
-    private void Update()
+
+    void Update()
     {
-        if (Input.GetKeyUp (KeyCode.Space))
+        if (Input.GetKey(KeyCode.F))
+            StartCoroutine(instObj());
+    }
+
+    void Inst()
+    {
+        Instantiate(obj, new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(-10f, 10f)), Quaternion.identity);
+    }
+
+
+    IEnumerator instObj()
+    {
+        while (true)
         {
-            myLight.enabled = !myLight.enabled;
+
+            Instantiate(obj, new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(-10f, 10f)), Quaternion.identity);
+
+            yield return new WaitForSeconds(1.5f);
         }
-
-        if (Input.GetKeyUp(KeyCode.V))
-        {
-            obj.SetActive(false);
-        }
-
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            Destroy (obj);
-        }
-
-        if (Input.GetKeyUp(KeyCode.R))
-            obj.GetComponent<Renderer>().material.color = Color.red;
-        else if (Input.GetKeyUp(KeyCode.G))
-            obj.GetComponent<Renderer>().material.color = Color.green;
-        else if (Input.GetKeyUp(KeyCode.B))
-            obj.GetComponent<Renderer>().material.color = Color.blue;
-
-       
     }
 }
