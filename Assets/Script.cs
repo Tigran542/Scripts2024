@@ -7,34 +7,21 @@ using UnityEngine;
 public class Script : MonoBehaviour
 {
     public GameObject obj;
+    private GameObject inst_obj;
+    [SerializeField]
+    private float speed = 4f;
 
 
     void Start()
     {
-        Invoke("Inst", 2f);
+        inst_obj = Instantiate(obj, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
     }
 
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.F))
-            StartCoroutine(instObj());
-    }
+        float zPos = Input.GetAxis("Vertical");
 
-    void Inst()
-    {
-        Instantiate(obj, new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(-10f, 10f)), Quaternion.identity);
-    }
-
-
-    IEnumerator instObj()
-    {
-        while (true)
-        {
-
-            Instantiate(obj, new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(-10f, 10f)), Quaternion.identity);
-
-            yield return new WaitForSeconds(1.5f);
-        }
+        inst_obj.transform.Translate(Vector3.forward * speed * zPos * Time.deltaTime);
     }
 }
