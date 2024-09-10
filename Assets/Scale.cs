@@ -6,7 +6,15 @@ using UnityEngine.UI;
 public class Scale : MonoBehaviour
 {
     private int count;
-    public Text txt;
+    private Text txt;
+
+    void Start()
+    {
+        txt = GameObject.Find("Text").GetComponent <Text>();
+
+    }
+
+
 
     void OnMouseDown()
     {
